@@ -40,10 +40,10 @@ class DashboardEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
-def write_dashboard(dashboard, stream):
+def write_dashboard(dashboard, stream, ensure_ascii=True):
     json.dump(
-        dashboard.to_json_data(), stream, sort_keys=True, indent=2,
-        cls=DashboardEncoder)
+        dashboard.to_json_data(), stream, ensure_ascii=ensure_ascii,
+        sort_keys=True, indent=2, cls=DashboardEncoder)
     stream.write('\n')
 
 
