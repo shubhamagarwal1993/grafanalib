@@ -1,0 +1,1 @@
+Run `clear && python setup.py install && python setup.py build && generate-dashboard -o script/test.json grafanalib/create_grafanalib_dashboard.py` to create json in test.json

@@ -494,6 +494,48 @@ class Row(object):
             'repeat': self.repeat,
         }
 
+@attr.s
+class Panel(object):
+    # TODO: jml would like to separate the balancing behaviour from this
+    # layer.
+    panels = attr.ib(default=attr.Factory(list), convert=_balance_panels)
+    collapse = attr.ib(
+        default=False, validator=instance_of(bool),
+    )
+    editable = attr.ib(
+        default=True, validator=instance_of(bool),
+    )
+    height = attr.ib(
+        default=attr.Factory(lambda: DEFAULT_ROW_HEIGHT),
+        validator=instance_of(Pixels),
+    )
+    showTitle = attr.ib(default=None)
+    title = attr.ib(default=None)
+    repeat = attr.ib(default=None)
+
+    def _iter_panels(self):
+        return iter(self.panels)
+
+    def _map_panels(self, f):
+        return attr.assoc(self, panels=list(map(f, self.panels)))
+
+    def to_json_data(self):
+        showTitle = False
+        title = "New row"
+        if self.title is not None:
+            showTitle = True
+            title = self.title
+        if self.showTitle is not None:
+            showTitle = self.showTitle
+        return {
+            'collapse': self.collapse,
+            'editable': self.editable,
+            'height': self.height,
+            'panels': self.panels,
+            'showTitle': showTitle,
+            'title': title,
+            'repeat': self.repeat,
+        }
 
 @attr.s
 class Annotations(object):
@@ -857,6 +899,7 @@ class Dashboard(object):
 
     title = attr.ib()
     rows = attr.ib()
+    panels = attr.ib()
     annotations = attr.ib(
         default=attr.Factory(Annotations),
         validator=instance_of(Annotations),

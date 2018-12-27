@@ -1,0 +1,277 @@
+// Annotations
+	"/maps/{id}/annotations/"
+	"/maps/{id}/annotations/draft/"
+	"/maps/annotations/"
+	"/maps/{map_id}/annotations/edges/"
+	"/maps/annotations/edges/"
+	"/maps/annotations/edges/{id}/"
+	"/maps/{map_id}/annotations/nodes/"
+	"/maps/annotations/nodes/"
+	"/maps/annotations/nodes/{id}/"
+
+	// Edge Drafts & Node Drafts
+	"/maps/{map_id}/annotations/draft/edges"
+	"/maps/annotations/draft/edges/"
+	"/maps/annotations/draft/edges/{id}/"
+	"/maps/{map_id}/annotations/draft/nodes/"
+	"/maps/annotations/draft/nodes/"
+	"/maps/annotations/draft/nodes/{id}/"
+
+	// Areas & Points
+	"/maps/{map_id}/annotations/areas/"
+	"/maps/annotations/areas/"
+	"/maps/annotations/areas/{id}/"
+	"/maps/annotations/points/"
+	"/maps/annotations/points/{id}/"
+
+	// Area Drafts & Point Drafts
+	"/maps/{map_id}/annotations/draft/areas/"
+	"/maps/annotations/draft/areas/"
+	"/maps/annotations/draft/areas/{id}/"
+	"/maps/annotations/draft/points/"
+	"/maps/annotations/draft/points/{id}/"
+
+	// Docks & Dock Groups
+	"/maps/{map_id}/annotations/docks/"
+	"/maps/annotations/docks/"
+	"/maps/annotations/docks/{id}/"
+	"/maps/{map_id}/annotations/groups/docks/"
+	"/maps/annotations/groups/docks/"
+	"/maps/annotations/groups/docks/{id}/"
+
+	// Dock Drafts & Dock Group Drafts
+	"/maps/{map_id}/annotations/draft/docks/"
+	"/maps/annotations/draft/docks/"
+	"/maps/annotations/draft/docks/{id}/"
+	"/maps/{map_id}/annotations/draft/groups/docks/"
+	"/maps/annotations/draft/groups/docks/"
+	"/maps/annotations/draft/groups/docks/{id}/"
+
+	// Poses & Pose Groups
+	"/maps/{map_id}/annotations/poses/"
+	"/maps/annotations/poses/"
+	"/maps/annotations/poses/{id}"
+	"/maps/{map_id}/annotations/groups/poses/"
+	"/maps/annotations/groups/poses/"
+	"/maps/annotations/groups/poses/{id}/"
+
+	// Pose Drafts & Pose Group Drafts
+	"/maps/{map_id}/annotations/draft/poses/"
+	"/maps/annotations/draft/poses/"
+	"/maps/annotations/draft/poses/{id}/"
+	"/maps/{map_id}/annotations/draft/groups/poses/"
+	"/maps/annotations/draft/groups/poses/"
+	"/maps/annotations/draft/groups/poses/{id}/"
+
+	// Queues & Queue Points
+	"/maps/{map_id}/annotations/queues/"
+	"/maps/annotations/poses/{id}/queue/"
+	"/maps/annotations/queues/"
+	"/maps/annotations/queues/{id}/"
+	"/maps/annotations/queue_points/"
+	"/maps/annotations/queue_points/{id}/"
+
+	// Queue Drafts & Queue Point Drafts
+	"/maps/{map_id}/annotations/draft/queues/"
+	"/maps/annotations/draft/poses/{id}/queue/"
+	"/maps/annotations/draft/queues/"
+	"/maps/annotations/draft/queues/{id}/"
+	"/maps/annotations/draft/queue_points/"
+	"/maps/annotations/draft/queue_points/{id}/"
+
+	// Fiducial Poses
+	"/maps/{map_id}/annotations/fiducial_poses/"
+	"/maps/annotations/fiducial_poses/"
+	"/maps/annotations/fiducial_poses/{id}/"
+
+	// Fiducial Pose Drafts
+	"/maps/{map_id}/annotations/draft/fiducial_poses/"
+	"/maps/annotations/draft/fiducial_poses/"
+	"/maps/annotations/draft/fiducial_poses/{id}/"
+
+	// Labels & Label Points
+	"/maps/{map_id}/annotations/labels/", 
+	"/maps/annotations/labels/"
+	"/maps/annotations/labels/{id}/"
+	"/maps/annotations/label_points/"
+	"/maps/annotations/label_points/{id}/"
+
+	// Label Drafts & Label Point Drafts
+	"/maps/{map_id}/annotations/draft/labels/", 
+	"/maps/annotations/draft/labels/"
+	"/maps/annotations/draft/labels/{id}/"
+	"/maps/annotations/draft/label_points/"
+	"/maps/annotations/draft/label_points/{id}/"
+
+	// CartPoses & CartPose Groups
+	"/maps/{map_id}/annotations/cart_poses/"
+	"/maps/annotations/cart_poses/"
+	"/maps/annotations/cart_poses/{id}/"
+
+	// CartPose Drafts & CartPose Group Drafts
+	"/maps/{map_id}/annotations/draft/cart_poses/"
+	"/maps/annotations/draft/cart_poses/"
+	"/maps/annotations/draft/cart_poses/{id}/"
+
+	// Survey Paths
+	"/maps/{map_id}/annotations/survey/paths/"
+	"/maps/annotations/survey/paths/"
+	"/maps/annotations/survey/paths/{id}/"
+	"/maps/{map_id}/annotations/draft/survey/paths/"
+
+	// Survey Path Drafts
+	"/maps/annotations/draft/survey/paths/"
+	"/maps/annotations/draft/survey/paths/{id}/"
+
+	// Survey Nodes
+	"/maps/{map_id}/annotations/survey/nodes/"
+	"/maps/annotations/survey/nodes/"
+	"/maps/annotations/survey/nodes/{id}/"
+	"/maps/{map_id}/annotations/draft/survey/nodes/"
+
+	// Survey Node Drafts
+	"/maps/annotations/draft/survey/nodes/"
+	"/maps/annotations/draft/survey/nodes/{id}/"
+
+	// Survey Poses
+	"/maps/{map_id}/annotations/survey/poses/"
+	"/maps/annotations/survey/poses/"
+	"/maps/annotations/survey/poses/{id}/"
+	"/maps/{map_id}/annotations/draft/survey/poses/"
+
+	// Survey Pose Drafts
+	"/maps/annotations/draft/survey/poses/"
+	"/maps/annotations/draft/survey/poses/{id}/"
+
+	// Access Points
+	"/maps/wifi/aps/"
+	"/maps/wifi/aps/{id}/"
+	"/maps/wifi/{wifi_id}/aps/"
+	"/maps/wifi/aps/{id}/image/"
+
+	// Wifi Maps
+	"/maps/wifi/"
+	"/maps/wifi/{id}/"
+	"/maps/{map_id}/wifi/"
+	"/maps/wifi/{id}/image/"
+
+	// Map
+	"/maps/"
+	"/maps/{id}/"
+
+
+	"/maps/{id}/{imagetype}/image/"
+	
+	// Stream maps
+	streams.Handle("/maps/"
+	streams.Handle("/maps/{id}/"
+
+//////////////////////////////////////
+
+
+// Task
+	"/tasks/active/"
+	"/tasks/active/{status}/"
+	"/tasks/"
+	"/tasks/actions/"
+	"/tasks/actions/definitions/"
+	"/tasks/actions/responses/"
+	"/tasks/actions/responses/definitions/"
+	"/tasks/{id}/"
+	"/tasks/{id}/page/"
+	"/tasks/actions/{id}/"
+	"/tasks/actions/definitions/{name}/"
+	"/tasks/actions/responses/{id}/"
+	"/tasks/actions/responses/definitions/{name}/"
+
+	"/robots/{robot}/tasks/{status}/"
+
+	// Stream
+	streams.Handle("/tasks/"
+	streams.Handle("/tasks/{robot}/"
+
+//////////////////////////////////////
+
+// Robot
+	"api/v1/robot",
+
+	"/robots/states/"
+	"/robots/states/{robot}/"
+
+	"/robots/configurations/"
+	"/robots/configurations/{name}/"
+
+	// Stream server
+	streams.Handle("/robots/"
+	streams.Handle("/robots/{robot}/"
+	streams.Handle("/maps/{map_id}/robots/"
+}
+
+//////////////////////////////////////
+
+// Settings
+
+	"/system/settings/charge/"
+	"/system/settings/general/"
+	"/system/settings/general/regions/"
+	"/system/settings/hmi/"
+	"/system/settings/robot/"
+	"/system/settings/stage/"
+	"/system/settings/update/"
+
+	// stream
+	streams.Handle("/settings/"
+}
+
+//////////////////////////////////////
+
+// Coordinator
+	"/services/coordinator/requests/definitions/"
+	"/services/coordinator/requests/definitions/{name}/"
+	"/services/coordinator/requests/"
+	"/services/coordinator/requests/{id}/"
+	"/services/coordinator/requests/status/{status}"
+	"/services/coordinator/requests/"
+	"/services/coordinator/requests/{id}/"
+	
+	// stream
+	streams.Handle("/services/coordinator/requests/"
+
+//////////////////////////////////////
+
+// Metric
+	"api/v1/metric",
+	"/metric_filters/"
+	"/metric_types/"
+	"/metric_types/{entity}/"
+	"/metric_types/{entity}/{metric_type_name}/"
+	"/metrics/{entity}/{metric_name}/"
+	"/metrics/overview/"
+
+//////////////////////////////////////
+
+// Report
+	"/reports/"
+	"/reports/{id}/page/"
+	"/reports/{id}/resend/"
+	"/reports/{id}/"
+	"/report_templates/"
+	"/report_templates/{id}/"
+	"/report_templates/{id}/page/"
+	"/report_templates/{id}/send/"
+
+	streams.Handle("/reports/"
+	streams.Handle("/report_templates/"
+}
+
+//////////////////////////////////////
+
+// Release
+	"/release/build"
+
+//////////////////////////////////////
+
+// Debug
+	"/debug/config/"
+
+//////////////////////////////////////
