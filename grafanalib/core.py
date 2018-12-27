@@ -290,7 +290,8 @@ class Target(object):
     :param target: Graphite way to select data
     """
 
-    expr = attr.ib(default="")
+    rawSql = attr.ib(default="")
+    rawQuery = attr.ib(default="True")
     format = attr.ib(default=TIME_SERIES_TARGET_FORMAT)
     legendFormat = attr.ib(default="")
     interval = attr.ib(default="", validator=instance_of(str))
@@ -304,7 +305,8 @@ class Target(object):
 
     def to_json_data(self):
         return {
-            'expr': self.expr,
+            'rawSql': self.rawSql,
+            'rawQuery': self.rawQuery,
             'target': self.target,
             'format': self.format,
             'interval': self.interval,
