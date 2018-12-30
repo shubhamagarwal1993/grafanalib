@@ -72,7 +72,7 @@ def getLatencyGraph(dataSource, customer_id, panelConfig, api_endpoint, graph_id
         dataSource = dataSource,
         yAxes = getYAxes(panelConfig),
         id = graph_id,
-        timeFrom = "150h",
+        timeFrom = "1h",
         gridPos = gridPos
     )
 
@@ -85,7 +85,7 @@ def getErrorGraph(dataSource, customer_id, panelConfig, api_endpoint, graph_id, 
         dataSource = dataSource,
         yAxes = getYAxes(panelConfig),
         id = graph_id,
-        timeFrom = "150h",
+        timeFrom = "1h",
         gridPos = gridPos
     )
 
@@ -102,26 +102,29 @@ def getPanels(dataSource, customer_id, panelConfig):
     # a unique id is needed for each graph
     graph_id = 0
 
-    for api_endpoint_id in range(len(api_endpoints)):
-        gridPos = GridPos(
-            h = 5,
-            w = 12,
-            x = 0,
-            y = 0
-        )
-        graph_id = graph_id + 1
-        latencyPanel = getLatencyGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graph_id, gridPos)
-        panels.append(latencyPanel)
+    # initial gridPos, which will have to be increamented for each graph's position
+    gridPos = GridPos(
+        h = 5,
+        w = 12,
+        x = 0,
+        y = 0
+    )
 
-        gridPos = GridPos(
-            h = 5,
-            w = 12,
-            x = 12,
-            y = 0
-        )
+    for api_endpoint_id in range(len(api_endpoints)):
+
+        gridPosY = (graph_id/2) * gridPos.h
+
+        latencyGridPos = GridPos(5, 12, 0, gridPosY)
         graph_id = graph_id + 1
-        errorPanel = getErrorGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graph_id, gridPos)
+        latencyPanel = getLatencyGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graph_id, latencyGridPos)
+        panels.append(latencyPanel)
+        latencyPanel = []
+
+        errorGridPos = GridPos(5, 12, 12, gridPosY)
+        graph_id = graph_id + 1
+        errorPanel = getErrorGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graph_id, errorGridPos)
         panels.append(errorPanel)
+        errorPanel = []
 
     return panels
 
@@ -138,7 +141,7 @@ def create_dashboard(data):
         title=dashboard_title,
         rows=[],
         panels=dashboard_panels,
-        refresh="30m"
+        refresh="1d"
     )
 
 
