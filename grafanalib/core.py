@@ -290,6 +290,8 @@ class Target(object):
     """
 
     expr = attr.ib(default="")
+    rawQuery = attr.ib(default=False)
+    rawSql = attr.ib(default="")
     format = attr.ib(default=TIME_SERIES_TARGET_FORMAT)
     legendFormat = attr.ib(default="")
     interval = attr.ib(default="", validator=instance_of(str))
@@ -304,6 +306,8 @@ class Target(object):
     def to_json_data(self):
         return {
             'expr': self.expr,
+            'rawQuery': self.rawQuery,
+            'rawSql': self.rawSql,
             'target': self.target,
             'format': self.format,
             'interval': self.interval,
@@ -450,6 +454,50 @@ def _balance_panels(panels):
 
 @attr.s
 class Row(object):
+    # TODO: jml would like to separate the balancing behaviour from this
+    # layer.
+    panels = attr.ib(default=attr.Factory(list), convert=_balance_panels)
+    collapse = attr.ib(
+        default=False, validator=instance_of(bool),
+    )
+    editable = attr.ib(
+        default=True, validator=instance_of(bool),
+    )
+    height = attr.ib(
+        default=attr.Factory(lambda: DEFAULT_ROW_HEIGHT),
+        validator=instance_of(Pixels),
+    )
+    showTitle = attr.ib(default=None)
+    title = attr.ib(default=None)
+    repeat = attr.ib(default=None)
+
+    def _iter_panels(self):
+        return iter(self.panels)
+
+    def _map_panels(self, f):
+        return attr.assoc(self, panels=list(map(f, self.panels)))
+
+    def to_json_data(self):
+        showTitle = False
+        title = "New row"
+        if self.title is not None:
+            showTitle = True
+            title = self.title
+        if self.showTitle is not None:
+            showTitle = self.showTitle
+        return {
+            'collapse': self.collapse,
+            'editable': self.editable,
+            'height': self.height,
+            'panels': self.panels,
+            'showTitle': showTitle,
+            'title': title,
+            'repeat': self.repeat,
+        }
+
+
+@attr.s
+class Panel(object):
     # TODO: jml would like to separate the balancing behaviour from this
     # layer.
     panels = attr.ib(default=attr.Factory(list), convert=_balance_panels)
@@ -825,6 +873,22 @@ class AlertCondition(object):
 
 
 @attr.s
+class GridPos(object):
+    h = attr.ib()
+    w = attr.ib()
+    x = attr.ib()
+    y = attr.ib()
+
+    def to_json_data(self):
+        return {
+            "h": self.h,
+            "w": self.w,
+            "x": self.x,
+            "y": self.y,
+        }
+
+
+@attr.s
 class Alert(object):
 
     name = attr.ib()
@@ -854,6 +918,7 @@ class Dashboard(object):
 
     title = attr.ib()
     rows = attr.ib()
+    panels = attr.ib(default="")
     annotations = attr.ib(
         default=attr.Factory(Annotations),
         validator=instance_of(Annotations),
@@ -928,6 +993,7 @@ class Dashboard(object):
             'links': self.links,
             'refresh': self.refresh,
             'rows': self.rows,
+            'panels': self.panels,
             'schemaVersion': self.schemaVersion,
             'sharedCrosshair': self.sharedCrosshair,
             'style': self.style,
@@ -962,6 +1028,7 @@ class Graph(object):
     error = attr.ib(default=False, validator=instance_of(bool))
     fill = attr.ib(default=1, validator=instance_of(int))
     grid = attr.ib(default=attr.Factory(Grid), validator=instance_of(Grid))
+    gridPos = attr.ib(default=None)
     id = attr.ib(default=None)
     isNew = attr.ib(default=True, validator=instance_of(bool))
     legend = attr.ib(
@@ -1008,6 +1075,7 @@ class Graph(object):
             'error': self.error,
             'fill': self.fill,
             'grid': self.grid,
+            'gridPos': self.gridPos,
             'id': self.id,
             'isNew': self.isNew,
             'legend': self.legend,

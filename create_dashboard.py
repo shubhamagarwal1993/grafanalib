@@ -3,8 +3,8 @@
 
 # from argparse import ArgumentParser
 import json
-# from grafanalib.core import *
-#from grafanalib.timescale import *
+from grafanalib.core import *
+from grafanalib.timescale import *
 
 
 def getYAxes(panelConfig):
@@ -54,10 +54,10 @@ def getTargets(customer_id, panelConfig, api_endpoint, graphType):
     httpMethods = panelConfig["http"]["methods"]
     for httpMethod_id in range(len(httpMethods)):
         target = Target(
-            # rawQuery = True,
-            # rawSql = getTargetExpr(customer_id, api_endpoint, httpMethods[httpMethod_id], graphType),
+            rawQuery = True,
+            rawSql = getTargetExpr(customer_id, api_endpoint, httpMethods[httpMethod_id], graphType),
             refId = chr(65 + httpMethod_id),
-            legendFormat="1xx"
+            legendFormat="1xx",
         )
         targets.append(target)
 
@@ -65,25 +65,28 @@ def getTargets(customer_id, panelConfig, api_endpoint, graphType):
 
 
 # getLatencyGraph will return latency graph
-def getLatencyGraph(dataSource, customer_id, panelConfig, api_endpoint, graph_id):
+def getLatencyGraph(dataSource, customer_id, panelConfig, api_endpoint, graph_id, gridPos):
     return Graph(
         title = "Avg latency on " + api_endpoint + " endpoint",
         targets = getTargets(customer_id, panelConfig, api_endpoint, "==LATENCY=="),
         dataSource = dataSource,
         yAxes = getYAxes(panelConfig),
         id = graph_id,
-        timeFrom = "55h"
+        timeFrom = "150h",
+        gridPos = gridPos
     )
 
 
 # getErrorGraph will return error graph
-def getErrorGraph(dataSource, customer_id, panelConfig, api_endpoint, graph_id):
+def getErrorGraph(dataSource, customer_id, panelConfig, api_endpoint, graph_id, gridPos):
     return Graph(
         title = "Count of error on " + api_endpoint + " endpoint",
         targets = getTargets(customer_id, panelConfig, api_endpoint, "==ERROR=="),
         dataSource = dataSource,
         yAxes = getYAxes(panelConfig),
-        id = graph_id
+        id = graph_id,
+        timeFrom = "150h",
+        gridPos = gridPos
     )
 
 
@@ -95,11 +98,30 @@ def getPanels(dataSource, customer_id, panelConfig):
 
     # get all api_endpoints as separate rows
     api_endpoints = panelConfig["http"]["api_endpoints"]
+    
+    # a unique id is needed for each graph
+    graph_id = 0
+
     for api_endpoint_id in range(len(api_endpoints)):
-        latencyPanel = getLatencyGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], api_endpoint_id + 1)
-        errorPanel = getErrorGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], api_endpoint_id + 1)
-        panels.append(Row(panels = [latencyPanel]))
-        panels.append(Row(panels = [errorPanel]))
+        gridPos = GridPos(
+            h = 5,
+            w = 12,
+            x = 0,
+            y = 0
+        )
+        graph_id = graph_id + 1
+        latencyPanel = getLatencyGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graph_id, gridPos)
+        panels.append(latencyPanel)
+
+        gridPos = GridPos(
+            h = 5,
+            w = 12,
+            x = 12,
+            y = 0
+        )
+        graph_id = graph_id + 1
+        errorPanel = getErrorGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graph_id, gridPos)
+        panels.append(errorPanel)
 
     return panels
 
@@ -114,8 +136,9 @@ def create_dashboard(data):
 
     return Dashboard(
         title=dashboard_title,
-        rows=dashboard_panels
-#        panels=dashboard_panels
+        rows=[],
+        panels=dashboard_panels,
+        refresh="30m"
     )
 
 
