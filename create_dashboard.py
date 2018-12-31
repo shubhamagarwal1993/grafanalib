@@ -90,39 +90,94 @@ def getErrorGraph(dataSource, customer_id, panelConfig, api_endpoint, graph_id, 
     )
 
 
+def getDescriptionPanel(graphID, gridPos):
+    return Text(
+        content = "# Latency for qa-twotwotest on all endpoints can be seen here",
+        #height = 5,
+        id = graphID,
+        links = [],
+        mode = TEXT_MODE_MARKDOWN,
+        #span = 12,
+        title = "",
+        transparent = True,
+        gridPos = gridPos
+        #type = TEXT_TYPE
+        #gridPos = gridPos,
+        #type = "text"
+    )
+
+
+def getDashlistPanel(graphID, gridPos):
+    return Dashlist(
+        folderId = None,
+        gridPos = gridPos,
+        headings = True,
+        id = graphID,
+        limit = 10,
+        links = [],
+        query = None,
+        recent = False,
+        search = True,
+        starred = False,
+        tags = [],
+        title = "Panel Title",
+        transparent = True,
+        type = "dashlist"
+    )
+
 # Return each api_endpoint as its own row
 def getPanels(dataSource, customer_id, panelConfig):
 
     # final rows array to return
     panels = []
 
-    # get all api_endpoints as separate rows
-    api_endpoints = panelConfig["http"]["api_endpoints"]
-    
-    # a unique id is needed for each graph
-    graph_id = 0
+    # unique id is needed for each graph
+    graphID = 1
 
-    # initial gridPos, which will have to be increamented for each graph's position
+    # A panel with description of the dashboard
     gridPos = GridPos(
         h = 5,
         w = 12,
         x = 0,
         y = 0
     )
+    descriptionPanel = getDescriptionPanel(graphID, gridPos)
+    panels.append(descriptionPanel)
+
+    graphID = graphID + 1
+    gridPos = GridPos(
+        h = 5,
+        w = 12,
+        x = 12,
+        y = 0
+    )
+    dashlistPanel = getDashlistPanel(graphID, gridPos)
+    panels.append(dashlistPanel)
+
+    # get all api_endpoints as separate rows
+    api_endpoints = panelConfig["http"]["api_endpoints"]
+
+    # initial gridPos, which will have to be increamented for each graph's position
+    gridPos = GridPos(
+        h = 5,
+        w = 12,
+        x = 0,
+        y = 5
+    )
 
     for api_endpoint_id in range(len(api_endpoints)):
 
-        gridPosY = (graph_id/2) * gridPos.h
+        gridPosY = (graphID/2) * gridPos.h
 
         latencyGridPos = GridPos(5, 12, 0, gridPosY)
-        graph_id = graph_id + 1
-        latencyPanel = getLatencyGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graph_id, latencyGridPos)
+        graphID = graphID + 1
+        latencyPanel = getLatencyGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graphID, latencyGridPos)
         panels.append(latencyPanel)
         latencyPanel = []
 
         errorGridPos = GridPos(5, 12, 12, gridPosY)
-        graph_id = graph_id + 1
-        errorPanel = getErrorGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graph_id, errorGridPos)
+        graphID = graphID + 1
+        errorPanel = getErrorGraph(dataSource, customer_id, panelConfig, api_endpoints[api_endpoint_id], graphID, errorGridPos)
         panels.append(errorPanel)
         errorPanel = []
 
@@ -141,7 +196,7 @@ def create_dashboard(data):
         title=dashboard_title,
         rows=[],
         panels=dashboard_panels,
-        refresh="1d"
+        refresh="30m"
     )
 
 

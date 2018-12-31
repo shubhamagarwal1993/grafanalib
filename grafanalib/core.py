@@ -1191,6 +1191,7 @@ class Text(object):
     span = attr.ib(default=None)
     title = attr.ib(default="")
     transparent = attr.ib(default=False, validator=instance_of(bool))
+    gridPos = attr.ib(default=None)
 
     def to_json_data(self):
         return {
@@ -1205,6 +1206,45 @@ class Text(object):
             'title': self.title,
             'transparent': self.transparent,
             'type': TEXT_TYPE,
+            'gridPos': self.gridPos
+        }
+
+
+@attr.s
+class Dashlist(object):
+    """Generates a list of Dashboards."""
+
+    folderId = attr.ib()
+    gridPos = attr.ib(default=None)
+    headings = attr.ib(default="")
+    id = attr.ib(default=None)
+    limit = attr.ib(default=10)
+    links = attr.ib(default=attr.Factory(list))
+    query = attr.ib(default=None)
+    recent = attr.ib(default=None)
+    search = attr.ib(default=False)
+    starred = attr.ib(default=None)
+    tags = attr.ib(default=None)
+    title = attr.ib(default="")
+    transparent = attr.ib(default=False, validator=instance_of(bool))
+    type = attr.ib(default=None)
+
+    def to_json_data(self):
+        return {
+            'folderId': self.folderId,
+            'gridPos': self.gridPos,
+            'headings': self.headings,
+            'id': self.id,
+            'limit': self.limit,
+            'links': self.links,
+            'query': self.query,
+            'recent': self.recent,
+            'search': self.search,
+            'starred': self.starred,
+            'tags': self.tags,
+            'title': self.title,
+            'transparent': self.transparent,
+            'type': self.type
         }
 
 
