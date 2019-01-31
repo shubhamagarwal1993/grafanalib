@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Low-level functions for building Grafana dashboards.
 
 The functions in this module don't enforce Weaveworks policy, and only mildly
